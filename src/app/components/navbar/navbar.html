@@ -1,0 +1,79 @@
+<!-- Desktop Nav -->
+<nav id="desktop-nav" class="flex justify-around items-center h-[17vh] font-poppins max-lg:hidden">
+    <div class="logo font-poppins text-2xl hover:cursor-default">
+        <span class="text-black">My</span> <span class="text-gray-500">Portfolio</span>
+    </div>
+    <div class="flex items-center gap-8">
+        <ul class="nav-links flex gap-8 list-none text-xl">
+            <li><a routerLink="/" fragment="about"
+                    class="text-black hover:text-gray-400 hover:underline underline-offset-[1rem] decoration-gray-300 transition-all duration-300">À
+                    propos</a>
+            </li>
+            <li><a routerLink="/" fragment="parcours"
+                    class="text-black hover:text-gray-400 hover:underline underline-offset-[1rem] decoration-gray-300 transition-all duration-300">Expérience</a>
+            </li>
+            <li><a routerLink="/" fragment="projects"
+                    class="text-black hover:text-gray-400 hover:underline underline-offset-[1rem] decoration-gray-300 transition-all duration-300">Projets</a>
+            </li>
+            <li><a routerLink="/" fragment="contact"
+                    class="text-black hover:text-gray-400 hover:underline underline-offset-[1rem] decoration-gray-300 transition-all duration-300">Contact</a>
+            </li>
+            @if (currentUser && currentUser.role === 'admin') {
+            <li><a routerLink="/dashboard"
+                    class="text-black hover:text-gray-400 hover:underline underline-offset-[1rem] decoration-gray-300 transition-all duration-300">Tableau
+                    de bord</a>
+            </li>
+            }
+        </ul>
+
+        <div class="flex items-center gap-4 ml-8">
+            @if (currentUser) {
+            <span class="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full uppercase">{{
+                currentUser.role }}</span>
+            <button (click)="logout()"
+                class="px-6 py-2 rounded-full border border-black font-semibold hover:bg-black hover:text-white transition-all text-sm">Déconnexion</button>
+            } @else {
+            <a routerLink="/login"
+                class="px-6 py-2 rounded-full border border-black font-semibold hover:bg-black hover:text-white transition-all text-sm text-center">Connexion</a>
+            }
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Nav -->
+<nav id="hamburger-nav" class="hidden lg:hidden max-lg:flex justify-around items-center h-[17vh] font-poppins">
+    <div class="logo text-2xl font-poppins">My Portfolio</div>
+    <div class="hamburger-menu relative inline-block">
+        <div class="hamburger-icon flex flex-col justify-between h-6 w-8 cursor-pointer z-50 relative"
+            (click)="toggleMenu()" [class.open]="isMenuOpen">
+            <span class="w-full h-[2px] bg-black transition-all duration-300" [class.rotate-45]="isMenuOpen"
+                [class.translate-y-[10px]]="isMenuOpen" [class.translate-x-[5px]]="isMenuOpen"></span>
+            <span class="w-full h-[2px] bg-black transition-all duration-300" [class.opacity-0]="isMenuOpen"></span>
+            <span class="w-full h-[2px] bg-black transition-all duration-300" [class.rotate-[-45deg]]="isMenuOpen"
+                [class.translate-y-[-10px]]="isMenuOpen" [class.translate-x-[5px]]="isMenuOpen"></span>
+        </div>
+        <div class="menu-links absolute top-full right-0 bg-white w-fit overflow-hidden transition-all duration-300 z-40 shadow-lg"
+            [class.max-h-[400px]]="isMenuOpen" [class.max-h-0]="!isMenuOpen">
+            <li class="list-none"><a routerLink="/" fragment="about" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">À propos</a></li>
+            <li class="list-none"><a routerLink="/" fragment="parcours" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">Expérience</a></li>
+            <li class="list-none"><a routerLink="/" fragment="projects" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">Projets</a></li>
+            <li class="list-none"><a routerLink="/" fragment="contact" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">Contact</a></li>
+            @if (currentUser && currentUser.role === 'admin') {
+            <li class="list-none"><a routerLink="/dashboard" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">Tableau de bord</a></li>
+            }
+            @if (currentUser) {
+            <li class="list-none"><button (click)="logout(); toggleMenu()"
+                    class="w-full p-4 text-center text-xl text-black hover:text-red-500 font-poppins">Déconnexion</button>
+            </li>
+            } @else {
+            <li class="list-none"><a routerLink="/login" (click)="toggleMenu()"
+                    class="block p-4 text-center text-xl text-black hover:text-gray-400">Connexion</a></li>
+            }
+        </div>
+    </div>
+</nav>

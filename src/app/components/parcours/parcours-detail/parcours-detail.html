@@ -1,0 +1,102 @@
+<!-- Loading State -->
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-poppins flex items-center justify-center"
+    *ngIf="isLoading()">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+        <p class="text-gray-500 font-bold">Chargement des détails...</p>
+    </div>
+</div>
+
+<!-- Not Found State -->
+<div *ngIf="!isLoading() && !item()" class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div class="text-6xl mb-4">🔍</div>
+    <h2 class="text-2xl font-black mb-2">Détail introuvable</h2>
+    <p class="text-gray-500 mb-8 max-w-md text-center">Les informations que vous recherchez ne sont plus disponibles.
+    </p>
+    <a routerLink="/home"
+        class="bg-black text-white px-8 py-4 rounded-2xl font-bold hover:bg-gray-800 transition-all shadow-lg">
+        Retourner au Portfolio
+    </a>
+</div>
+
+<!-- Content -->
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8 font-poppins fadeIn" *ngIf="!isLoading() && item()">
+    <div
+        class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-[2.5rem] border border-gray-200 shadow-sm animate-fade-in">
+        <div class="flex flex-col md:flex-row gap-10 items-start">
+            <div class="w-full md:w-1/3 flex flex-col items-center">
+                <div
+                    class="w-32 h-32 bg-black rounded-[2rem] flex items-center justify-center text-white mb-6 shadow-xl">
+                    <i *ngIf="item()?.categorie === 'education'" class="fas fa-graduation-cap text-4xl"></i>
+                    <i *ngIf="item()?.categorie === 'experience'" class="fas fa-briefcase text-4xl"></i>
+                </div>
+                <span [class.bg-blue-100]="item()?.categorie === 'education'"
+                    [class.text-blue-600]="item()?.categorie === 'education'"
+                    [class.bg-green-100]="item()?.categorie === 'experience'"
+                    [class.text-green-600]="item()?.categorie === 'experience'"
+                    class="px-6 py-2 rounded-full text-sm font-bold uppercase tracking-widest shadow-sm">
+                    {{ item()?.categorie === 'education' ? 'Formation' : 'Expérience' }}
+                </span>
+            </div>
+
+            <div class="w-full md:w-2/3">
+                <div class="flex justify-between items-start mb-2">
+                    <h1 class="text-2xl md:text-4xl font-bold text-gray-900">{{ item()?.titre }}</h1>
+                </div>
+                <p class="text-xl font-semibold text-gray-500 mb-6">{{ item()?.entreprise }}</p>
+
+                <div class="flex items-center gap-2 mb-8 text-black bg-gray-100 w-fit px-4 py-2 rounded-xl font-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>{{ item()?.annee_debut }} <span *ngIf="item()?.annee_fin"> - {{ item()?.annee_fin
+                            }}</span><span *ngIf="!item()?.annee_fin"> - Présent</span></span>
+                </div>
+
+                <div class="space-y-8">
+                    <section>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-black rounded-full"></span>
+                            Description
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed text-lg italic">
+                            {{ item()?.description }}
+                        </p>
+                    </section>
+
+                    <section *ngIf="item()?.realisations">
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-black rounded-full"></span>
+                            Réalisations clés
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed text-lg">
+                            {{ item()?.realisations }}
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-black rounded-full"></span>
+                            Compétences clés
+                        </h2>
+                        <div class="flex flex-wrap gap-2">
+                            <span *ngFor="let skill of item()?.competences?.split(',')"
+                                class="px-4 py-2 bg-white border-2 border-gray-100 rounded-2xl text-sm font-bold text-gray-700 hover:border-black transition-colors cursor-default">
+                                {{ skill.trim() }}
+                            </span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-gray-100">
+                    <a routerLink="/home"
+                        class="text-gray-500 font-bold hover:text-black hover:underline transition-all flex items-center gap-2">
+                        ← Retour au Portfolio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

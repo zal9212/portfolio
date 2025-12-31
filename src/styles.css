@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply antialiased text-gray-900;
+        overflow-x: hidden;
+    }
+}
+
+@layer components {
+    .section-title {
+        @apply text-4xl md:text-5xl font-bold text-center mb-8;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}

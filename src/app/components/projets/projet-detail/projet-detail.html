@@ -1,0 +1,133 @@
+<!-- Loading State -->
+<div *ngIf="isLoading()" class="min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
+</div>
+
+<!-- Project Detail Content -->
+<div class="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8 font-poppins fadeIn" *ngIf="!isLoading() && projet()">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header / Navigation -->
+        <div class="mb-8 flex items-center justify-between">
+            <a routerLink="/home" class="flex items-center gap-2 text-gray-500 hover:text-black transition-all group">
+                <span class="text-xl group-hover:-translate-x-1 transition-transform">←</span>
+                <span class="font-bold">Retour au Portfolio</span>
+            </a>
+            <div class="flex gap-2">
+                <span *ngIf="projet()?.est_public"
+                    class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase tracking-wider">Public</span>
+                <span *ngIf="!projet()?.est_public"
+                    class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full uppercase tracking-wider">Privé</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-xl shadow-gray-200/50 border border-gray-100">
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+
+                <!-- Left Column: Image Hero -->
+                <div class="lg:col-span-7 bg-gray-100 relative group overflow-hidden">
+                    <img [src]="projet()?.image || 'assets/project-1.png'" [alt]="projet()?.titre"
+                        class="w-full h-full object-cover min-h-[400px] lg:min-h-[600px] transition-transform duration-700 group-hover:scale-105" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+                </div>
+
+                <!-- Right Column: Info Details -->
+                <div class="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center">
+                    <div class="mb-6">
+                        <h1 class="text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4">
+                            {{ projet()?.titre }}
+                        </h1>
+                        <div class="flex flex-wrap gap-2">
+                            <span *ngFor="let tech of (projet()?.technologies || '').split(',')"
+                                class="bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                {{ tech.trim() }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <!-- Description -->
+                        <section>
+                            <h2
+                                class="text-lg font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4 uppercase tracking-tighter">
+                                Description du Projet</h2>
+                            <p class="text-gray-600 leading-relaxed text-lg">
+                                {{ projet()?.description }}
+                            </p>
+                        </section>
+
+                        <!-- Timeline & Links -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                <span class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Période</span>
+                                <p class="text-sm font-bold text-gray-700">
+                                    {{ projet()?.date_debut | date:'MMM yyyy' }} - {{ (projet()?.date_fin | date:'MMM
+                                    yyyy')
+                                    || 'Présent' }}
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100"
+                                *ngIf="projet()?.lien_github || projet()?.lien_demo">
+                                <span class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Accès</span>
+                                <div class="flex gap-3">
+                                    <a *ngIf="projet()?.lien_github" [href]="projet()?.lien_github" target="_blank"
+                                        class="text-gray-900 hover:scale-110 transition-transform">
+                                        <i class="fab fa-github text-xl"></i>
+                                    </a>
+                                    <a *ngIf="projet()?.lien_demo" [href]="projet()?.lien_demo" target="_blank"
+                                        class="text-gray-900 hover:scale-110 transition-transform">
+                                        <i class="fas fa-external-link-alt text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Competences -->
+                        <section *ngIf="linkedCompetences().length > 0">
+                            <h2
+                                class="text-lg font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4 uppercase tracking-tighter">
+                                Enjeux Techniques</h2>
+                            <div class="flex flex-wrap gap-2">
+                                <div *ngFor="let comp of linkedCompetences()"
+                                    class="flex items-center gap-3 p-2 pr-4 bg-gray-50 hover:bg-white hover:shadow-md border border-gray-100 rounded-2xl transition-all cursor-default">
+                                    <div
+                                        class="w-8 h-8 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-sm">
+                                        <img [src]="comp.image || 'assets/checkmark.png'" [alt]="comp.titre"
+                                            class="w-full h-full object-contain">
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-700">{{ comp.titre }}</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <a *ngIf="projet()?.lien_demo" [href]="projet()?.lien_demo" target="_blank"
+                                class="flex-1 bg-black text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-800 hover:-translate-y-1 transition-all shadow-lg shadow-black/10">
+                                <span>Voir la Démo</span>
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </a>
+                            <a *ngIf="projet()?.lien_github" [href]="projet()?.lien_github" target="_blank"
+                                class="flex-1 border-2 border-black px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-black hover:text-white hover:-translate-y-1 transition-all">
+                                <i class="fab fa-github"></i>
+                                <span>Code Source</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Not Found State -->
+<div *ngIf="!isLoading() && !projet()" class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div class="text-6xl mb-4">🔍</div>
+    <h2 class="text-2xl font-black mb-2">Projet introuvable</h2>
+    <p class="text-gray-500 mb-8 max-w-md text-center">Le projet que vous recherchez n'existe plus ou a été déplacé.</p>
+    <a routerLink="/home"
+        class="bg-black text-white px-8 py-4 rounded-2xl font-bold hover:bg-gray-800 transition-all shadow-lg">
+        Retourner au Portfolio
+    </a>
+</div>

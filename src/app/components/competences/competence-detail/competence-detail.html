@@ -1,0 +1,75 @@
+<!-- Loading State -->
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-poppins flex items-center justify-center"
+    *ngIf="isLoading()">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+        <p class="text-gray-500 font-bold">Chargement de la compétence...</p>
+    </div>
+</div>
+
+<!-- Not Found State -->
+<div *ngIf="!isLoading() && !competence()"
+    class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div class="text-6xl mb-4"><i class="fa-solid fa-circle-exclamation"></i></div>
+    <h2 class="text-2xl font-black mb-2">Compétence introuvable</h2>
+    <p class="text-gray-500 mb-8 max-w-md text-center">La compétence que vous recherchez n'existe plus ou a été
+        déplacée.</p>
+    <a routerLink="/home"
+        class="bg-black text-white px-8 py-4 rounded-2xl font-bold hover:bg-gray-800 transition-all shadow-lg">
+        Retourner au Portfolio
+    </a>
+</div>
+
+<!-- Project Detail Content -->
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-poppins fadeIn"
+    *ngIf="!isLoading() && competence()">
+    <div
+        class="max-w-4xl mx-auto bg-white p-10 rounded-[2.5rem] border border-gray-200 shadow-sm animate-fade-in text-center">
+        <div class="flex flex-col items-center">
+            <div
+                class="w-32 h-32 bg-gray-100 rounded-3xl flex items-center justify-center p-6 mb-8 shadow-inner overflow-hidden">
+                <img [src]="competence()?.image || 'assets/checkmark.png'" alt="Skill Image"
+                    class="w-full h-full object-contain" />
+            </div>
+
+            <div class="mb-4">
+                <span class="px-4 py-1.5 bg-black text-white text-xs font-bold rounded-full uppercase tracking-widest">
+                    {{ competence()?.categorie || 'Compétence' }}
+                </span>
+            </div>
+
+            <h1 class="text-5xl font-bold mb-2 text-gray-900">{{ competence()?.titre }}</h1>
+
+            <div class="w-64 mx-auto mb-8">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-sm font-bold text-gray-500">Maitrise actuelle</span>
+                    <span class="text-lg font-bold text-black">{{ competence()?.niveau }}/10</span>
+                </div>
+                <div class="w-full bg-gray-100 h-3 rounded-full overflow-hidden shadow-sm">
+                    <div class="bg-black h-full rounded-full transition-all duration-1000"
+                        [style.width.%]="competence()?.niveau || 0 * 10"></div>
+                </div>
+            </div>
+
+            <div class="w-20 h-1 bg-gray-200 mx-auto mb-10 rounded-full"></div>
+
+            <div class="w-full max-w-2xl">
+                <h2 class="text-2xl font-bold mb-6 flex items-center justify-center gap-3">
+                    <span class="w-2 h-2 bg-black rounded-full text-center"></span>
+                    À propos de cette compétence
+                </h2>
+                <p
+                    class="text-gray-600 leading-relaxed text-lg italic bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
+                    {{ competence()?.description || 'Aucune description fournie.' }}
+                </p>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-gray-100 w-full">
+                <a routerLink="/home"
+                    class="inline-flex items-center gap-2 text-gray-500 font-bold hover:text-black hover:underline underline-offset-4 transition-all">
+                    ← Retour au Portfolio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

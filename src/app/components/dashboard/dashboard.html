@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8 font-poppins">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-12">
+            <h1 class="text-4xl font-bold">Tableau de Bord Admin</h1>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-600">Bienvenue, <strong>{{ currentUser()?.username }}</strong></span>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-[2rem] border border-[#a3a3a3] shadow-sm flex flex-col items-center">
+                <span class="text-5xl font-bold mb-2">{{ stats().competences }}</span>
+                <span class="text-gray-500 font-semibold uppercase tracking-wider">Compétences</span>
+            </div>
+            <div class="bg-white p-8 rounded-[2rem] border border-[#a3a3a3] shadow-sm flex flex-col items-center">
+                <span class="text-5xl font-bold mb-2">{{ stats().projets }}</span>
+                <span class="text-gray-500 font-semibold uppercase tracking-wider">Projets</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white p-10 rounded-[2rem] border border-[#a3a3a3] shadow-sm">
+            <h2 class="text-2xl font-bold mb-8">Actions Rapides</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a routerLink="/competences/new"
+                    class="flex items-center justify-center gap-2 bg-black text-white font-bold py-4 px-6 rounded-full hover:bg-gray-800 transition-all">
+                    <span>+</span> Ajouter une compétence
+                </a>
+                <a routerLink="/projets/new"
+                    class="flex items-center justify-center gap-2 border border-black text-black font-bold py-4 px-6 rounded-full hover:bg-black hover:text-white transition-all">
+                    <span>+</span> Ajouter un projet
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a routerLink="/home"
+                class="px-8 py-3 rounded-full border border-gray-300 font-bold hover:bg-gray-100 transition-all">
+                Voir le Portfolio
+            </a>
+        </div>
+    </div>
+</div>

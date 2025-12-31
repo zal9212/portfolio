@@ -1,0 +1,114 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-poppins">
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-[2rem] border border-[#a3a3a3] shadow-sm">
+        <h2 class="text-3xl font-bold text-center mb-8">{{ isEditMode ? 'Modifier la compétence' : 'Ajouter une
+            compétence' }}</h2>
+
+        <form (ngSubmit)="onSubmit()" #competenceForm="ngForm" class="space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-bold text-gray-700">Libellé <span
+                                class="text-red-500">*</span></label>
+                        <span class="text-xs text-gray-500">{{ getRemainingChars('titre') }} / {{ maxTitreLength
+                            }}</span>
+                    </div>
+                    <input type="text" name="titre" [(ngModel)]="competence.titre" required [maxlength]="maxTitreLength"
+                        #titreInput="ngModel" [class.border-red-500]="formSubmitted && titreInput.invalid"
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                        placeholder="ex: Angular">
+                    <p *ngIf="formSubmitted && titreInput.invalid" class="text-red-500 text-xs mt-1">Le libellé est
+                        obligatoire</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Niveau (1-10) <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="niveau" [(ngModel)]="competence.niveau" min="1" max="10" required
+                        #niveauInput="ngModel" [class.border-red-500]="formSubmitted && niveauInput.invalid"
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black">
+                    <p *ngIf="formSubmitted && niveauInput.invalid" class="text-red-500 text-xs mt-1">Niveau entre 1 et
+                        10</p>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-bold text-gray-700">Description <span
+                            class="text-red-500">*</span></label>
+                    <span class="text-xs text-gray-500">{{ getRemainingChars('description') }} / {{
+                        maxDescriptionLength }}</span>
+                </div>
+                <textarea name="description" [(ngModel)]="competence.description" rows="3" required
+                    [maxlength]="maxDescriptionLength" #descriptionInput="ngModel"
+                    [class.border-red-500]="formSubmitted && descriptionInput.invalid"
+                    class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                    placeholder="Décrivez brièvement votre maîtrise de cette compétence..."></textarea>
+                <p *ngIf="formSubmitted && descriptionInput.invalid" class="text-red-500 text-xs mt-1">La description
+                    est obligatoire</p>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-sm font-bold text-gray-700">Image illustrative</label>
+
+                <!-- Preview Area -->
+                <div class="flex items-center gap-6 p-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                    <div
+                        class="w-24 h-24 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-gray-100 shadow-sm">
+                        <img [src]="competence.image || 'assets/checkmark.png'" alt="Preview"
+                            class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-3 italic">Format recommandé: PNG ou JPEG. Taille max: 2Mo.
+                        </p>
+                        <label
+                            class="cursor-pointer bg-black text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-gray-800 transition-all inline-block">
+                            Choisir un fichier
+                            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Hidden URL Input (Still used for model binding) -->
+                <input type="hidden" name="image" [(ngModel)]="competence.image">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Catégorie <span
+                            class="text-red-500">*</span></label>
+                    <select name="categorie" [(ngModel)]="competence.categorie" required #categorieInput="ngModel"
+                        [class.border-red-500]="formSubmitted && categorieInput.invalid"
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black">
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="Frontend">Frontend</option>
+                        <option value="Backend">Backend</option>
+                        <option value="Design">Design</option>
+                        <option value="Outils">Outils</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                    <p *ngIf="formSubmitted && categorieInput.invalid" class="text-red-500 text-xs mt-1">La catégorie
+                        est obligatoire</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Visibilité</label>
+                    <select name="est_visible" [(ngModel)]="competence.est_visible"
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black">
+                        <option [ngValue]="true">Visible</option>
+                        <option [ngValue]="false">Masquée</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex gap-4 pt-4">
+                <button type="submit"
+                    class="flex-1 bg-black text-white font-bold py-4 rounded-full hover:bg-gray-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter' }}
+                </button>
+                <a routerLink="/"
+                    class="flex-1 bg-white border border-black text-black font-bold py-4 rounded-full text-center hover:bg-gray-100 transition-all">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
