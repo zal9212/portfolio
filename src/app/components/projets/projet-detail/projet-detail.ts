@@ -1,8 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjetService } from '../../../services/projet.service';
 import { CompetenceService } from '../../../services/competence.service';
+import { AuthService } from '../../../services/auth.service';
 import { Projet } from '../../../models/projet';
 import { Competence } from '../../../models/competence';
 
@@ -17,14 +18,21 @@ export class ProjetDetail implements OnInit {
   projet = signal<Projet | undefined>(undefined);
   linkedCompetences = signal<Competence[]>([]);
   isLoading = signal<boolean>(true);
+  isAdmin = signal<boolean>(false);
 
   constructor(
     private projetService: ProjetService,
     private competenceService: CompetenceService,
-    private route: ActivatedRoute
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.authService.currentUser$.subscribe(user => {
+      this.isAdmin.set(user?.role === 'admin');
+    });
+
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
@@ -60,5 +68,20 @@ export class ProjetDetail implements OnInit {
         this.isLoading.set(false);
       }
     });
+  }
+
+  deleteProjet(): void {
+    const id = this.projet()?.id;
+    if (id && confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
+      this.projetService.delete(id).subscribe({
+        next: () => {
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Error deleting project:', err);
+          alert('Erreur lors de la suppression du projet.');
+        }
+      });
+    }
   }
 }
