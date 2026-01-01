@@ -21,7 +21,7 @@ export class Home {
     },
     {
       name: 'Gnima Sané',
-      role: 'Développeur Frontend ',
+      role: 'Développeuse Frontend ',
       image: 'assets/gnima.png',
       cv: 'assets/resume-example.pdf'
     }
