@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AdminGuard } from './guards/admin-guard';
 
 import { ParcoursList } from './components/parcours/parcours-list/parcours-list';
+import { ParcoursForm } from './components/parcours/parcours-form/parcours-form';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -61,6 +62,16 @@ export const routes: Routes = [
     {
         path: 'parcours',
         component: ParcoursList
+    },
+    {
+        path: 'parcours/new',
+        component: ParcoursForm,
+        canActivate: [AuthGuard, AdminGuard]
+    },
+    {
+        path: 'parcours/edit/:id',
+        component: ParcoursForm,
+        canActivate: [AuthGuard, AdminGuard]
     },
     {
         path: 'parcours/:id',

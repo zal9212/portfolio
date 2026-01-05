@@ -1,0 +1,78 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-poppins">
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-[2rem] border border-[#a3a3a3] shadow-sm">
+        <h2 class="text-3xl font-bold text-center mb-8">{{ isEditMode ? 'Modifier le parcours' : 'Ajouter un parcours'
+            }}
+        </h2>
+
+        <form (ngSubmit)="onSubmit()" #parcoursForm="ngForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Titre / Diplôme <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="titre" [(ngModel)]="parcours.titre" required
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                        placeholder="ex: Master Informatique">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Entreprise / École <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="entreprise" [(ngModel)]="parcours.entreprise" required
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                        placeholder="ex: Université de Dakar">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Année Début <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="annee_debut" [(ngModel)]="parcours.annee_debut" required
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Année Fin</label>
+                    <input type="number" name="annee_fin" [(ngModel)]="parcours.annee_fin"
+                        class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                        placeholder="Laisser vide si en cours">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Catégorie <span
+                        class="text-red-500">*</span></label>
+                <select name="categorie" [(ngModel)]="parcours.categorie" required
+                    class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black">
+                    <option value="education">Formation</option>
+                    <option value="experience">Expérience</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Description <span
+                        class="text-red-500">*</span></label>
+                <textarea name="description" [(ngModel)]="parcours.description" rows="5" required
+                    class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                    placeholder="Description du poste ou de la formation..."></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Compétences liées</label>
+                <input type="text" name="competences" [(ngModel)]="parcours.competences"
+                    class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
+                    placeholder="ex: Angular, Scrum, Java (séparées par des virgules)">
+                <p class="text-xs text-gray-500 mt-1 italic">Séparez les compétences par des virgules</p>
+            </div>
+
+            <div class="flex gap-4 pt-4">
+                <button type="submit" [disabled]="!parcoursForm.form.valid"
+                    class="flex-1 bg-black text-white font-bold py-4 rounded-full hover:bg-gray-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter le parcours' }}
+                </button>
+                <a routerLink="/parcours"
+                    class="flex-1 bg-white border border-black text-black font-bold py-4 rounded-full text-center hover:bg-gray-100 transition-all">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

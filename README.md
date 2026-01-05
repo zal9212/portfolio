@@ -1,59 +1,81 @@
-# PortfolioApp
+# Modern Portfolio App - Angular 21 & Signals
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+> [!IMPORTANT]
+> **Instructions pour l'Évaluateur**
+> - **Dossier de Rendu** : `dar326_DIALLO_MamadouSaliou_SANE_Gnima_angular`
+> - **Documentation** : Un rapport technique détaillé de 15 pages est disponible à la racine : [Documentation_Technique_Angular.md](./Documentation_Technique_Angular.md).
+> - **Vidéo de Démonstration** : (Lien/Fichier à ajouter par les étudiants dans le dossier final).
+> - **Identifiants Admin** : Username: `admin` | Password: `password`.
 
-## Development server
+---
 
-To start a local development server, run:
+[![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Signals](https://img.shields.io/badge/Angular-Signals-blue?style=for-the-badge)](https://angular.dev/guide/signals)
 
+Un portfolio de nouvelle génération conçu avec les dernières fonctionnalités d'**Angular 21**, privilégiant la performance, la réactivité avec les **Signals**, et un design premium via **Tailwind CSS**.
+
+##  Fonctionnalités Clés
+
+- **Home Dynamique** : Présentation interactive avec scroll fluide et intégration de CV.
+- **Authentification & Rôles** : Système de login complet avec redirection intelligente et protection des routes (`AuthGuard`, `AdminGuard`).
+- **Dashboard Stats** : Vue d'ensemble réactive des compétences et projets utilisant les Signals.
+- **Administration CRUD** : Interface complète pour ajouter, modifier ou supprimer des Compétences, Projets et Parcours.
+- **Design Premium & Dark Mode** : Esthétique moderne avec support natif du mode sombre et transitions fluides.
+- **Backend Mock** : Serveur JSON simulé pour une expérience Full-Stack immédiate.
+
+## Stack Technique
+
+- **Framework** : Angular 21 (Standalone Components)
+- **State Management** : Angular Signals & RxJS
+- **Styling** : Tailwind CSS (Utility-first)
+- **Backend (Mock)** : JSON Server
+- **Tests** : Vitest & HttpClientTestingModule
+
+## Installation & Lancement
+
+### 1. Cloner le projet
+```bash
+git clone https://github.com/votre-repo/portfolio-app.git
+cd portfolio-app
+```
+
+### 2. Installer les dépendances
+```bash
+npm install
+```
+
+### 3. Lancer le Backend (JSON Server)
+Dans un premier terminal :
+```bash
+npx json-server --watch db.json --port 3000
+```
+
+### 4. Lancer l'application
+Dans un second terminal :
 ```bash
 ng serve
 ```
+L'application est maintenant accessible sur `http://localhost:4200/`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+##  Architecture du Projet
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+src/app/
+├── components/      # Composants Standalone (Home, Login, Dashboard...)
+├── services/        # Services Injectables (Auth, API CRUD)
+├── guards/          # Protection des routes (Admin, Auth)
+├── models/          # Interfaces TypeScript
+├── app.routes.ts    # Routage Angular 21
+└── db.json          # Données mockées du serveur
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Tests
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
+Exécutez les tests unitaires avec Vitest :
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+*Développé avec pour un rendu professionnel et performant.* 

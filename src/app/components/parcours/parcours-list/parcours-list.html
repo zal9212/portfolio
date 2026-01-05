@@ -10,6 +10,14 @@
             <!-- Central Line -->
             <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
 
+            <!-- Bouton d'ajout admin -->
+            <div class="flex justify-center mb-12 relative z-20" *ngIf="isAdmin()">
+                <a routerLink="/parcours/new"
+                    class="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-all font-bold shadow-lg">
+                    + Ajouter un parcours
+                </a>
+            </div>
+
             <div class="space-y-12">
                 <div *ngFor="let item of parcours(); let i = index"
                     class="relative flex flex-col md:flex-row items-center" [class.md:flex-row-reverse]="i % 2 !== 0">
@@ -61,7 +69,7 @@
                         </div>
 
                         <!-- Admin Actions -->
-                        <div class="flex gap-2 mt-4 justify-center" *ngIf="isAdmin()">
+                        <div class="flex gap-2 mt-4 justify-center relative z-10" *ngIf="isAdmin()">
                             <a [routerLink]="['/parcours/edit', item.id]" (click)="$event.stopPropagation()"
                                 class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-all font-semibold text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
