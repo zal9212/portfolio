@@ -17,13 +17,13 @@ export class Home {
       name: 'Mamadou Saliou Diallo',
       role: 'Développeur Backend ',
       image: 'assets/saliou.jpg',
-      cv: 'assets/resume-example.pdf'
+      cv: 'assets/cv-msd.pdf'
     },
     {
       name: 'Gnima Sané',
       role: 'Développeuse Frontend ',
       image: 'assets/gnima.png',
-      cv: 'assets/resume-example.pdf'
+      cv: 'assets/cv-gnima.pdf'
     }
   ];
 
